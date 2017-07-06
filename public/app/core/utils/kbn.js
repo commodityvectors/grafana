@@ -1,8 +1,9 @@
 define([
   'jquery',
-  'lodash'
+  'lodash',
+  'moment'
 ],
-function($, _) {
+function($, _, moment) {
   'use strict';
 
   var kbn = {};
@@ -501,6 +502,12 @@ function($, _) {
   kbn.valueFormats.flowcfs  = kbn.formatBuilders.fixedUnit('cfs');
   kbn.valueFormats.flowcfm  = kbn.formatBuilders.fixedUnit('cfm');
 
+  // Date
+  kbn.valueFormats.date = function(size) {
+    if (size === null) { return ""; }
+    return moment.utc(size).format('DD-MMM-YY HH:mm') + ' UTC';
+  };
+
   // Time
   kbn.valueFormats.hertz = kbn.formatBuilders.decimalSIPrefix('Hz');
 
@@ -727,6 +734,12 @@ function($, _) {
           {text: 'Euro (€)',    value: 'currencyEUR'},
           {text: 'Yen (¥)',     value: 'currencyJPY'},
           {text: 'Rubles (₽)',  value: 'currencyRUB'},
+        ]
+      },
+      {
+        text: 'date',
+        submenu: [
+          {text: 'Date Time (ms)', value: 'date'},
         ]
       },
       {
